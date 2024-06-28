@@ -2,7 +2,7 @@ import axios from 'axios';
 
 
 const axiosCSRF = axios.create({
-  baseURL: 'http://127.0.0.1:8000',
+  baseURL: 'https://scorisever.azurewebsites.net',
   withCredentials: true, // Ensure cookies are sent with requests
 });
 

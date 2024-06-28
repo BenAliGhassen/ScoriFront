@@ -8,6 +8,7 @@ import { setRank } from '../Redux/Reducer/Ranking';
 
 function UserInfoForm() {
   const scoreA = useSelector((state) => state.Score.value);
+  const rang= useSelector((state) => state.Rank.value);
  const dispatch = useDispatch()
 
   const submit = (values,actions)=>{
@@ -16,7 +17,7 @@ function UserInfoForm() {
 
       setTimeout(()=>{
         actions.resetForm();
-        dispatch(setRank(true))
+        dispatch(setRank(!rang))
       },1000)
     }else{
       Swal.fire({
