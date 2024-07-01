@@ -2,7 +2,7 @@ import axios from 'axios';
 
 
 const axiosCSRF = axios.create({
-  baseURL: 'http://4.246.139.32',
+  baseURL: 'http://azurewebsites.eastus.cloudapp.azure.com/api',
   withCredentials: true, // Ensure cookies are sent with requests
 });
 

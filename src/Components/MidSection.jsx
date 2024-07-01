@@ -24,7 +24,7 @@ function MidSection() {
       }, [rank]);
 
   return (
-    <div className='m-5 d-flex flex-column align-content-center w-25'>
+    <div className='m-5 d-flex flex-column align-content-center w-50'>
         <button onClick={()=>{setState(!state)}} className='btn w-50'>
         <FaTableList /> {(state === true) ? 'Voir rang' : 'Page de garde'}
         </button>
