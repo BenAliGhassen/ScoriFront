@@ -1,6 +1,7 @@
 import React, { useState,useEffect } from 'react'
 
 import Rank from './Rank';
+import { FaRankingStar } from "react-icons/fa6";
 
 import { ShowRanking } from '../Functions/ShowRanking'
 import { useSelector } from 'react-redux';
@@ -32,12 +33,13 @@ function MidSection() {
 
   return (
     <div className='m-5 d-flex flex-column align-content-center'>    
-      <button onClick={toggleDrawer} className='rounded'>Rang</button>
+      <button onClick={toggleDrawer} className='rounded bg-primary btn-Rang'><FaRankingStar />
+      Rang</button>
            { ranking && <Drawer
                 open={isOpen}
                 onClose={toggleDrawer}
                 direction='right'
-                className='bla bla bla'
+                className='Drawer-rang'
             >
                 <Rank ranking={ranking}/>
             </Drawer> }

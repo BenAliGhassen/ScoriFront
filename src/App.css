@@ -10,11 +10,19 @@
     width: 30rem !important;
     height: auto  !important;
 }
-
+.btn-Rang{
+color: white;
+}
+.Drawer-rang{
+    width: 75vw;
+}
 @media (max-width: 768px) {
     .landingImg {
         width: 15rem !important;
         height: auto  !important;
+    }
+    .Drawer-rang{
+        width: 100vw;
     }
 }
 
