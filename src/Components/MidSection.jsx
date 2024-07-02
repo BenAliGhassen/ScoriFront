@@ -1,12 +1,19 @@
 import React, { useState,useEffect } from 'react'
-import VideoHolder from './VideoHolder';
+
 import Rank from './Rank';
-import { FaTableList } from "react-icons/fa6";
+
 import { ShowRanking } from '../Functions/ShowRanking'
 import { useSelector } from 'react-redux';
+import Drawer from 'react-modern-drawer'
 
+import 'react-modern-drawer/dist/index.css'
 function MidSection() {
-    const [state,setState]=useState(true);
+
+  const [isOpen, setIsOpen] = React.useState(false)
+  const toggleDrawer = () => {
+      setIsOpen((prevState) => !prevState)
+  }
+
     const rank= useSelector((state) => state.Rank.value);
     
     const [ranking,setRanking]=useState(null)
@@ -24,13 +31,17 @@ function MidSection() {
       }, [rank]);
 
   return (
-    <div className='m-5 d-flex flex-column align-content-center w-50'>
-        <button onClick={()=>{setState(!state)}} className='btn w-50'>
-        <FaTableList /> {(state === true) ? 'Voir rang' : 'Page de garde'}
-        </button>
-        
-
-      {(state === true) ? <VideoHolder /> : <Rank ranking={ranking}/>}
+    <div className='m-5 d-flex flex-column align-content-center'>    
+      <button onClick={toggleDrawer} className='rounded'>Rang</button>
+           { ranking && <Drawer
+                open={isOpen}
+                onClose={toggleDrawer}
+                direction='right'
+                className='bla bla bla'
+            >
+                <Rank ranking={ranking}/>
+            </Drawer> }
+    
     </div>
   )
 }

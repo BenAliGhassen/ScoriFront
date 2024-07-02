@@ -4,17 +4,66 @@ import { SchemaForm } from '../Schema/FormSchema'
 import FormError from './FormError'
 import Button from 'react-bootstrap/Button';
 import { CalculerScoreA } from '../Functions/CalcScoreA';
-import {useDispatch } from 'react-redux'
+import {useDispatch, useSelector  } from 'react-redux'
 import { setScore } from '../Redux/Reducer/ScoreA';
-
+import Swal from 'sweetalert2';
+import { setRank } from '../Redux/Reducer/Ranking';
+import { SendScore } from '../Functions/SendScoreReq';
 function FormulaireChamps() {
 
   const [scoreA,setScoreA]=useState(null)
   const dispatch = useDispatch();
+  const rang= useSelector((state) => state.Rank.value);
 
-const submit = (values)=>{
- setScoreA(CalculerScoreA(values))
-}
+
+  const Save = (values,score)=>{
+    if (score !== null){
+      SendScore(values,score)
+console.log('submited')
+      setTimeout(()=>{
+        dispatch(setRank(!rang))
+      },1000)
+    }else{
+      Swal.fire({
+        title: "Pas de score",
+        text: "Calculer votre score avant",
+        icon: "warning",
+        
+      })
+    }
+    
+  }
+
+
+  const submit = async (values) => {
+    
+    const score = await CalculerScoreA(values);
+    setScoreA(score);
+
+    Swal.fire({
+      title: "Score A",
+      html: `Votre score A : ${score}`,
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Enregistrer",  
+      cancelButtonText: "Annuler"      
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Save(values,score);
+        Swal.fire({
+          title: "Enregistré !",   
+          text: "Votre score a été enregistré.",
+          icon: "success"
+        });
+      }
+    });
+  };
+
+
+
+
+
 
 useEffect(()=>{
 
@@ -37,6 +86,9 @@ initialValues : {
   Rang1 : 1,
   Rang2 : 1,
   dateDeNaissance : "",
+  nom : '',
+  prenom : '',
+  etablisement : '',
 },
 validationSchema : SchemaForm,
 onSubmit :submit,
@@ -205,11 +257,50 @@ name='dateDeNaissance'
 />
 {errors.dateDeNaissance && touched.dateDeNaissance && <FormError error={errors.dateDeNaissance}/>}
 
+<div  className='d-flex flex-rox' >
+        
+        <input 
+        type='text'
+        className='rounded m-2 w-25'
+        placeholder='Nom'
+        name='nom'
+        onChange={handleChange}
+        onBlur={handleBlur}
+        value={values.nom}  
+        required
+          />
+
+        
+        <input 
+        type='text' 
+        className='rounded m-2 w-25' 
+        placeholder='Prenom'
+        name='prenom'
+        onChange={handleChange}
+        onBlur={handleBlur}
+        value={values.prenom} 
+        required
+        />
+
+
+        <input 
+        type='text' 
+        className='rounded m-2 w-25' 
+        placeholder='Etablisement'
+        name='etablisement'
+        onChange={handleChange}
+        onBlur={handleBlur}
+        value={values.etablisement} 
+        required
+        />
+
+      </div>
+
 <Button 
 type='submit'
 className='rounded border-0 w-50 mt-2' 
 variant="primary"
->Get Score</Button>
+>Calculer mon Score</Button>
 </form>
 {scoreA && <h2 className='mx-2'>Score A : {scoreA}</h2>}
     </div>

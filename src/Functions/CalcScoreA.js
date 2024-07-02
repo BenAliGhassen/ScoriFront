@@ -1,6 +1,6 @@
 
 
-export const CalculerScoreA = (data)=>{
+export const CalculerScoreA = async(data)=>{
 
 
 let currentDate = new Date();
@@ -16,8 +16,8 @@ const M = MG >= 15 ? 100 : (MG > 10 ? 20*(MG-10) : 0)
     const r1 = (data.Rang1-1)/data.NbEtdudiant1
     const r2 = (data.Rang2-1)/data.NbEtdudiant2
 
-    const ri1 = (r1 < 0.3) ? 100-(700*r1)/3 : 0 
-    const ri2 = (r2 < 0.3) ? 100-(700*r2)/3 : 0 
+    const ri1 = (r1 <= 0.3) ? 100-(700*r1)/3 : 0 
+    const ri2 = (r2 <= 0.3) ? 100-(700*r2)/3 : 0 
 
     const R = 0.5 *(ri1 + ri2)
 
@@ -29,7 +29,7 @@ const M = MG >= 15 ? 100 : (MG > 10 ? 20*(MG-10) : 0)
     const B2 = data.Mbac >= 16 ? 20 : (data.Mbac >=15 ? 15 : (data.Mbac >=12 ? 10 : (data.Mbac > 11 ? 5 :0)))
 
 
-    const scoreA = 0.2*M +1.4*R/3 +5*ML/6 + 2*(B1+B2)/3
+   const scoreA = 0.2*M +1.4*R/3 +5*ML/6 + 2*(B1+B2)/3
 
     return scoreA
 }
